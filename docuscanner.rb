@@ -22,6 +22,10 @@ doculocs
 end
 end
 
+
+
+
+
 # Run this script with `$ ruby my_script.rb`
 require 'mysql2'
 require 'active_record'
@@ -68,12 +72,13 @@ end
 
 # Define the models
 class Document < ActiveRecord::Base
-	has_many :episodes, inverse_of: :show
+#	has_many :episodes, inverse_of: :show
 end
 
 class Page < ActiveRecord::Base
-	belongs_to :show, inverse_of: :episodes, required: true
+	#belongs_to :show, inverse_of: :episodes, required: true
 end
+=begin
 
 # Create a few records...
 show = Show.create!(name: 'Big Bang Theory')
@@ -87,5 +92,6 @@ puts "#{show.name} has #{show.episodes.size} episodes named #{episode_names.join
 # => Big Bang Theory has 2 episodes named Pilot, The Big Bran Hypothesis.
 
 # Use `binding.pry` here to experiment with this setup.
+=end
 
 
