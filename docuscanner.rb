@@ -67,11 +67,11 @@ ActiveRecord::Schema.define do
 end
 
 # Define the models
-class Show < ActiveRecord::Base
+class Document < ActiveRecord::Base
 	has_many :episodes, inverse_of: :show
 end
 
-class Episode < ActiveRecord::Base
+class Page < ActiveRecord::Base
 	belongs_to :show, inverse_of: :episodes, required: true
 end
 
