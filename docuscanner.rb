@@ -39,7 +39,7 @@ ActiveRecord::Base.establish_connection(
 		database: 'alloysecrets',
 	  host: '10.0.0.32',
     user: 'alloysecets',
-	  password: 'crazymilkfish$$'
+	  password: 'password'
 
 
 )
@@ -72,14 +72,20 @@ end
 
 # Define the models
 class Document < ActiveRecord::Base
-#	has_many :episodes, inverse_of: :show
+	has_many :pages
 end
 
 class Page < ActiveRecord::Base
-	#belongs_to :show, inverse_of: :episodes, required: true
+	belongs_to :document # inverse_of: :foo, required: true
+end
+
+class Words < ActiveRecord::Base
+	belongs_to :words
 end
 =begin
 
+page = Page.create!(:page_num '1', :document_id '1')
+doc = Document.create!(:name 'Foo', )
 # Create a few records...
 show = Show.create!(name: 'Big Bang Theory')
 
