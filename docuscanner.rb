@@ -24,8 +24,6 @@ end
 
 
 
-
-
 # Run this script with `$ ruby my_script.rb`
 require 'mysql2'
 require 'active_record'
