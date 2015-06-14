@@ -2,43 +2,46 @@
 require 'pdf-reader'
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
-#
-hostndir = Hash.new
-hostndir['localhost'] = 'C:/users/mark/documents/'
-
+## Only worrya bout local host for now
 def scanfs_docs(hdir)
 pdflocs = []
 
-hdir.each_pair do |host, dir|
-	if host == 'localhost'
-
-		findstr =  "find #{dir} -name \"*.pdf\""
-
+hdir.each do |dir|
+	findstr =  "find #{dir} -name \"*.pdf\""
 	pdflocs = `#{findstr}`.split("\n")
-
-
 	end
-doculocs
+pdflocs
 end
-end
+
 
 def pdfreader(pdf2read)
+	pdf = Hash.new
+	pages = Array.new
 	reader = PDF::Reader.new(pdf2read)
 
-	puts reader.pdf_version
-	puts reader.info
-	puts reader.metadata
-	puts reader.page_count
+	pdf['version'] = reader.pdf_version
+	pdf['reader'] = reader.info
+	pdf['metadata'] = reader.metadata
+	pdf['count'] = reader.page_count
 
 	reader.pages.each do |page|
-		puts page.fonts
-		puts page.text
-		puts page.raw_content
+		pages.push(page.text)
+		#puts page.fonts
+		#puts page.text
+		#puts page.raw_content
 	end
+	pdf['pages'] = pages
+	pdf
 end
 
-pdfreader('C:\Users\Mark\Documents\sick.pdf')
-
+books = []
+doclocs = scanfs_docs(['/home/vishnu/Downloads/'])
+doclocs.each do |pdf|
+book = pdfreader(pdf)
+  books.push book
+  end
+p books[0]['count']
+p books[1]['pages'][1]
 
 __END__
 doclocs=scanfs_docs (hostndir)
