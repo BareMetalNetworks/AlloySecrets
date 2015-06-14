@@ -1,13 +1,10 @@
 # Connect to an in-memory sqlite3 database
 ActiveRecord::Base.establish_connection(
-		adapter: 'mysql2',
-		database: 'alloysecrets',
-		host: '10.0.0.32',
-		user: 'alloysecets',
-		password: 'password'
-
-
-)
+		adapter: 'mysql2'
+		database: 'alloysecrets'
+		host: '10.0.0.32'
+		user: 'alloysecrets'
+		password: 'password')
 
 # Define a minimal database schema
 ActiveRecord::Schema.define do
