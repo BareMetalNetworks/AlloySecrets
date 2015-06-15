@@ -13,7 +13,6 @@ hdir.each do |dir|
 pdflocs
 end
 
-
 def pdfreader(pdf2read)
 	pdf = Hash.new
 	pages = Array.new
