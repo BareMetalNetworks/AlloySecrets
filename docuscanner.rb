@@ -4,13 +4,13 @@ require 'pdf-reader'
 
 ## Only worrya bout local host for now
 def scanfs_docs(hdir)
-pdflocs = []
+	pdflocs = []
 
-hdir.each do |dir|
-	findstr =  "find #{dir} -name \"*.pdf\""
-	pdflocs = `#{findstr}`.split("\n")
+	hdir.each do |dir|
+		findstr =  "find #{dir} -name \"*.pdf\""
+		pdflocs = `#{findstr}`.split("\n")
 	end
-pdflocs
+	pdflocs
 end
 
 def pdfreader(pdf2read)
@@ -41,6 +41,7 @@ book = pdfreader(pdf)
   end
 p books[0]['count']
 p books[1]['pages'][1]
+p books
 
 __END__
 doclocs=scanfs_docs (hostndir)
