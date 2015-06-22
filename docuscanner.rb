@@ -17,11 +17,11 @@ def pdfreader(pdf2read)
 	pdf = Hash.new
 	pages = Array.new
 	reader = PDF::Reader.new(pdf2read)
-
-	pdf['version'] = reader.pdf_version
-	pdf['reader'] = reader.info
-	pdf['metadata'] = reader.metadata
-	pdf['count'] = reader.page_count
+  pdf[:title]
+	pdf[:version] = reader.pdf_version
+	pdf[:reader] = reader.info
+	pdf[:metadata] = reader.metadata
+	pdf[:count] = reader.page_count
 
 	reader.pages.each do |page|
 		pages.push(page.text)
@@ -29,7 +29,7 @@ def pdfreader(pdf2read)
 		#puts page.text
 		#puts page.raw_content
 	end
-	pdf['pages'] = pages
+	pdf[:pages] = pages
 	pdf
 end
 
@@ -39,8 +39,8 @@ doclocs.each do |pdf|
 book = pdfreader(pdf)
   books.push book
   end
-p books[0]['count']
-p books[1]['pages'][1]
+p books[0][:count]
+p books[1][:pages][1]
 p books
 
 __END__
