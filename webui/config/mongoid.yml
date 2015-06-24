@@ -1,0 +1,8 @@
+production:
+  sessions:
+      default:
+        hosts:
+          - datastore2:27017
+        database: alloysecrets
+        username: alloysecrets
+        password: crazymilkfish$$

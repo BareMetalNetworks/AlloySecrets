@@ -3,8 +3,7 @@ ActiveRecord::Base.establish_connection(
 		adapter: 'mysql2'
 		database: 'alloysecrets'
 		host: '10.0.0.32'
-		user: 'alloysecrets'
-		password: 'password')
+		user: 'alloysecrets' word: 'password')
 
 # Define a minimal database schema
 ActiveRecord::Schema.define do

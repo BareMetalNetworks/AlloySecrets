@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 require 'pdf-reader'
+require 'mongoid'
+
+Mongoid.load!('webui/config/mongoid.yml')
+
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
 ## Only worrya bout local host for now
