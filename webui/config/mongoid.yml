@@ -5,4 +5,4 @@ production:
           - datastore2:27017
         database: alloysecrets
         username: alloysecrets
-        password: crazymilkfish$$
+        password: password
