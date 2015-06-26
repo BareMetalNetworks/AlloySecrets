@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  author: MyString
+  info: MyString
+  version: MyString
+  metadata: MyText
+  count: 1
+  timestamp: 2015-06-26 17:54:20
+  page: MyText
+
+two:
+  title: MyString
+  author: MyString
+  info: MyString
+  version: MyString
+  metadata: MyText
+  count: 1
+  timestamp: 2015-06-26 17:54:20
+  page: MyText

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MongoConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="datastore2" />
+          <option name="serverUrls">
+            <list>
+              <option value="datastore2:27017" />
+            </list>
+          </option>
+          <option name="userDatabase" value="alloysecrets_dev" />
+        </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="datastore0" />
+          <option name="serverUrls">
+            <list>
+              <option value="datastore0:27017" />
+            </list>
+          </option>
+        </ServerConfiguration>
+      </list>
+    </option>
+    <option name="shellPath" value="/usr/bin/mongo" />
+  </component>
+</project>
