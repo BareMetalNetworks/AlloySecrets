@@ -71,18 +71,17 @@ def mongolian_horde(inpdf)
 														 :timestamp => Time.now,
 														 :pages => inpdf[:pages]
 												 })
-
+	[inserted, inpdf]
 end
 
-books = []
 doclocs = scanfs_docs(['/home/vishnu/Downloads/'])
 doclocs.each do |pdf|
-book = pdfreader(pdf)
-  books.push book
-  end
-p books[0][:count]
-p books[1][:pages][1]
-p books
+  inserted, original_pdf = mongolian_horde(pdfreader(pdf))
+  p inserted.title
+  p inserted.count
+  p '-------------------------------------------------'
+end
+
 
 __END__
 doclocs=scanfs_docs (hostndir)
