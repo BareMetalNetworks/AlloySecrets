@@ -62,7 +62,7 @@ end
 
 def mongolian_horde(inpdf)
 	inserted = Book.create({
-													 	:title => inpdf[:title],
+														:title => inpdf[:title],
 														 :version => inpdf[:version],
 														 :author => inpdf[:author],
 														 :info => inpdf[:info],
