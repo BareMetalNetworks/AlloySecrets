@@ -1,10 +1,33 @@
 #!/usr/bin/env ruby
 require 'pdf-reader'
 require 'mongoid'
-
-Mongoid.load!('webui/config/mongoid.yml')
+require 'moped'
 
 ## Scan local and remote file systems for docs/pdfs insert into mongo
+
+$:.unshift File.dirname(__FILE__)
+Mongoid.load!("webui/config/mongoid.yml", :production)
+# Mongoid.configure do |config|
+#
+#   name = 'alloysecrets_dev_db'
+#   host = '10.0.1.32'
+#   port = 27017
+#   config.database = Mongoid::Connection.new.db(alloysecrets)
+# end
+class Book
+  include Mongoid::Document
+
+  field :title
+  field :author
+	field :reader
+	field :version
+  field :metadata
+	field :count
+	field :timestamp, :type=> Time
+  field :pages, :type => Array
+end
+
+
 
 ## Only worrya bout local host for now
 def scanfs_docs(hdir)
@@ -31,10 +54,24 @@ def pdfreader(pdf2read)
 		pages.push(page.text)
 		#puts page.fonts
 		#puts page.text
-		#puts page.raw_content
+		#puts page.raw_contentdevelopment:
 	end
 	pdf[:pages] = pages
 	pdf
+end
+
+def mongolian_horde(inpdf)
+	inserted = Book.create({
+														 :title => inpdf[:title],
+														 :version => inpdf[:version],
+														 :author => inpdf[:author],
+														 :reader => inpdf[:reader],
+														 :metadata => inpdf[:metadata],
+														 :count => inpdf[:count],
+														 :timestamp => Time.now,
+														 :pages => inpdf[:pages]
+												 })
+
 end
 
 books = []
