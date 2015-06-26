@@ -8,7 +8,7 @@ development:
   database: alloysecrets
   host: 10.0.1.32
   user: alloysecrets
-  password: crazymilkfish$$
+  password: holypasswordbatman
   pool: 5
   timeout: 5000
 
@@ -20,7 +20,7 @@ test:
   database: alloysecrets
   host: 10.0.1.32
   user: alloysecrets
-  password: crazymilkfish$$
+  password: password
   pool: 5
   timeout: 5000
 
@@ -29,6 +29,6 @@ production:
   database: alloysecrets
   host: 10.0.1.32
   user: alloysecrets
-  password: crazymilkfish$$
+  password: holypasswordbatman
   pool: 5
   timeout: 5000
