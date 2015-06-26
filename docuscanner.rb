@@ -44,7 +44,7 @@ def pdfreader(pdf2read)
 	pdf = Hash.new
 	pages = Array.new
 	reader = PDF::Reader.new(pdf2read)
-  pdf[:title]
+  pdf[:title] = reader.title
 	pdf[:version] = reader.pdf_version
 	pdf[:reader] = reader.info
 	pdf[:metadata] = reader.metadata
