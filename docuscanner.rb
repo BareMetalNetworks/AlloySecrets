@@ -19,7 +19,7 @@ class Book
 
   field :title
   field :author
-	field :reader
+	field :info
 	field :version
   field :metadata
 	field :count
@@ -40,16 +40,16 @@ def scanfs_docs(hdir)
 	pdflocs
 end
 
-def pdfreader(pdf2read)
+def pdf_reader(pdf2read)
 	pdf = Hash.new
 	pages = Array.new
 	reader = PDF::Reader.new(pdf2read)
-  pdf[:title] = reader.title
+  pdf[:title] = File.basename pdf2read
 	pdf[:version] = reader.pdf_version
-	pdf[:reader] = reader.info
+	pdf[:info] = reader.info
 	pdf[:metadata] = reader.metadata
 	pdf[:count] = reader.page_count
-
+  #pdf[:pages] = reader.map(&:text)
 	reader.pages.each do |page|
 		pages.push(page.text)
 		#puts page.fonts
@@ -62,10 +62,10 @@ end
 
 def mongolian_horde(inpdf)
 	inserted = Book.create({
-														 :title => inpdf[:title],
+													 	:title => inpdf[:title],
 														 :version => inpdf[:version],
 														 :author => inpdf[:author],
-														 :reader => inpdf[:reader],
+														 :info => inpdf[:info],
 														 :metadata => inpdf[:metadata],
 														 :count => inpdf[:count],
 														 :timestamp => Time.now,
@@ -74,10 +74,10 @@ def mongolian_horde(inpdf)
 	[inserted, inpdf]
 end
 
-doclocs = scanfs_docs(['/home/vishnu/Downloads/'])
-doclocs.each do |pdf|
-  inserted, original_pdf = mongolian_horde(pdfreader(pdf))
-  p inserted.title
+docLocs = scanfs_docs(['/home/vishnu/Downloads/'])
+docLocs.each do |pdfLoc|
+  inserted, original_pdf = mongolian_horde(pdf_reader(pdfLoc))
+  p  inserted.title
   p inserted.count
   p '-------------------------------------------------'
 end
