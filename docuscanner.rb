@@ -2,6 +2,14 @@
 require 'pdf-reader'
 require 'mongoid'
 require 'moped'
+require 'optparse'
+
+options = {}
+version = '0.1.0'
+help = 'run as a daemon, looks in webui/uploads/pdfs/ for new pdfs and inserts them into mongostore'
+
+op = OptionParser.new
+op.banner = "PDF parser and mongoloid insertion daemon"
 
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
@@ -28,8 +36,6 @@ class Book
 end
 
 
-
-## Only worrya bout local host for now
 def scanfs_docs(hdir)
 	pdflocs = []
 
@@ -74,7 +80,7 @@ def mongolian_horde(inpdf)
 	[inserted, inpdf]
 end
 
-docLocs = scanfs_docs(['/home/vishnu/Downloads/'])
+docLocs = scanfs_docs(['webui/uploads/pdf/'])
 docLocs.each do |pdfLoc|
   inserted, original_pdf = mongolian_horde(pdf_reader(pdfLoc))
   p  inserted.title
