@@ -4,6 +4,7 @@ require 'mongoid'
 require 'moped'
 require 'optparse'
 
+$:.unshift File.dirname(__FILE__)
 options = {}
 version = '0.1.0'
 help = 'run as a daemon, looks in webui/uploads/pdfs/ for new pdfs and inserts them into mongostore'
@@ -11,20 +12,13 @@ help = 'run as a daemon, looks in webui/uploads/pdfs/ for new pdfs and inserts t
 op = OptionParser.new
 op.banner = "PDF parser and mongoloid insertion daemon"
 
+Logger.new('mongol.log', 'a')
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
-$:.unshift File.dirname(__FILE__)
 Mongoid.load!("webui/config/mongoid.yml", :production)
-# Mongoid.configure do |config|
-#
-#   name = 'alloysecrets_dev_db'
-#   host = '10.0.1.32'
-#   port = 27017
-#   config.database = Mongoid::Connection.new.db(alloysecrets)
-# end
+
 class Book
   include Mongoid::Document
-
   field :title
   field :author
 	field :info
@@ -35,54 +29,49 @@ class Book
   field :pages, :type => Array
 end
 
+class Mongol
+	def self.mongolian_find(hdir)
+		pdflocs = []
 
-def scanfs_docs(hdir)
-	pdflocs = []
-
-	hdir.each do |dir|
-		findstr =  "find #{dir} -name \"*.pdf\""
-		pdflocs = `#{findstr}`.split("\n")
+		hdir.each do |dir|
+			findstr =  "find #{dir} -name \"*.pdf\""
+			pdflocs = `#{findstr}`.split("\n")
+		end
+		pdflocs
 	end
-	pdflocs
-end
 
-def pdf_reader(pdf2read)
-	pdf = Hash.new
-	pages = Array.new
-	reader = PDF::Reader.new(pdf2read)
-  pdf[:title] = File.basename pdf2read
-	pdf[:version] = reader.pdf_version
-	pdf[:info] = reader.info
-	pdf[:metadata] = reader.metadata
-	pdf[:count] = reader.page_count
-  #pdf[:pages] = reader.map(&:text)
-	reader.pages.each do |page|
-		pages.push(page.text)
-		#puts page.fonts
-		#puts page.text
-		#puts page.raw_contentdevelopment:
+	def self.mongolian_reader(pdf2read)
+		pdf = Hash.new
+		pages = Array.new
+		reader = PDF::Reader.new(pdf2read)
+		pdf[:title] = File.basename pdf2read
+		pdf[:version] = reader.pdf_version
+		pdf[:info] = reader.info
+		pdf[:metadata] = reader.metadata
+		pdf[:count] = reader.page_count
+		pdf[:pages] = reader.map(&:text)
+		pdf
 	end
-	pdf[:pages] = pages
-	pdf
+
+	def self.mongolian_penetration(inpdf)
+		inserted = Book.create({
+															 :title => inpdf[:title],
+															 :version => inpdf[:version],
+															 :author => inpdf[:author],
+															 :info => inpdf[:info],
+															 :metadata => inpdf[:metadata],
+															 :count => inpdf[:count],
+															 :timestamp => Time.now,
+															 :pages => inpdf[:pages]
+													 })
+		[inserted, inpdf]
+	end
 end
 
-def mongolian_horde(inpdf)
-	inserted = Book.create({
-														:title => inpdf[:title],
-														 :version => inpdf[:version],
-														 :author => inpdf[:author],
-														 :info => inpdf[:info],
-														 :metadata => inpdf[:metadata],
-														 :count => inpdf[:count],
-														 :timestamp => Time.now,
-														 :pages => inpdf[:pages]
-												 })
-	[inserted, inpdf]
-end
-
-docLocs = scanfs_docs(['webui/uploads/pdf/'])
+dirs = ['webui/uploads/pdf']
+docLocs = Mongol.mongolian_find(dirs)
 docLocs.each do |pdfLoc|
-  inserted, original_pdf = mongolian_horde(pdf_reader(pdfLoc))
+  inserted, original_pdf = Mongol.mongolian_penetration(Mongol.mongolian_reader(pdfLoc))
   p  inserted.title
   p inserted.count
   p '-------------------------------------------------'
