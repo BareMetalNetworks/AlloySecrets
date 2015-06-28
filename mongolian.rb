@@ -4,6 +4,16 @@ require 'mongoid'
 require 'moped'
 require 'optparse'
 
+require 'rinda/ring'       # for RingServer
+require 'rinda/tuplespace' # for TupleSpace
+
+#DRb.start_service
+
+# Create a TupleSpace to hold named services, and start running.
+#Rinda::RingServer.new(Rinda::TupleSpace.new)
+
+#DRb.thread.join
+
 $:.unshift File.dirname(__FILE__)
 options = {}
 version = '0.1.0'
@@ -12,7 +22,7 @@ help = 'run as a daemon, looks in webui/uploads/pdfs/ for new pdfs and inserts t
 op = OptionParser.new
 op.banner = "PDF parser and mongoloid insertion daemon"
 
-Logger.new('mongol.log', 'a')
+logger = Logger.new('mongol.log', 'a')
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
 Mongoid.load!("webui/config/mongoid.yml", :production)
@@ -49,7 +59,10 @@ class Mongol
 		pdf[:info] = reader.info
 		pdf[:metadata] = reader.metadata
 		pdf[:count] = reader.page_count
-		pdf[:pages] = reader.map(&:text)
+    reader.pages.each do |page|
+      pages.push(page.text)
+
+    end
 		pdf
 	end
 
@@ -68,22 +81,17 @@ class Mongol
 	end
 end
 
-dirs = ['webui/uploads/pdf']
+dirs =  %w{webui/uploads/pdf /home/vishnu/}
 docLocs = Mongol.mongolian_find(dirs)
 docLocs.each do |pdfLoc|
   inserted, original_pdf = Mongol.mongolian_penetration(Mongol.mongolian_reader(pdfLoc))
-  p  inserted.title
-  p inserted.count
-  p '-------------------------------------------------'
+  #logger.log inserted.title
+  #logger.log inserted.count.to_s
 end
 
 
 __END__
-doclocs=scanfs_docs (hostndir)
-p doclocs
-doclocs.each do |docloc|
-pdfread=pdfreader(docloc)
-end
+
 
 
 
