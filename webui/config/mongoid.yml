@@ -1,3 +1,12 @@
+development:
+  sessions:
+      default:
+       hosts:
+        - datastore2:27017
+       password: password
+       username: alloysecrets
+       database: alloysecrets
+
 production:
   sessions:
       default:

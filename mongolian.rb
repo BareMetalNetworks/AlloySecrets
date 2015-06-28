@@ -85,8 +85,15 @@ dirs =  %w{webui/uploads/pdf /home/vishnu/}
 docLocs = Mongol.mongolian_find(dirs)
 docLocs.each do |pdfLoc|
   inserted, original_pdf = Mongol.mongolian_penetration(Mongol.mongolian_reader(pdfLoc))
-  #logger.log inserted.title
-  #logger.log inserted.count.to_s
+  logger.info inserted.title
+  logger.info inserted.count.to_s
+  logger.info "-----------------------------------------"
+end
+
+p Book.count
+Books.each do |b|
+  p b.pages
+  sleep 1
 end
 
 
