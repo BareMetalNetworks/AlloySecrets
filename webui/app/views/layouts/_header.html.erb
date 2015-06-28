@@ -1,0 +1,16 @@
+<header id="page_header">
+	<nav id="'utility">
+
+			 <p>You are logged in as: <strong> No users yet! </strong></p>
+		<%= link_to "[Your Account]", "/welcome/index" %>
+		<%= link_to "[Logout]", "/logout" %>
+
+		</nav>
+
+	<%= link_to(
+					image_tag("logo.png",
+										id: 'logo'),
+					root_url,
+					title: "Dashboard") %>
+
+</header>
