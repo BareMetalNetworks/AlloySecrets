@@ -68,6 +68,7 @@ class Mongol
 
 	def self.mongolian_penetration(inpdf)
 		inserted = Book.create({
+															 :id => rand(10000..10000000),
 															 :title => inpdf[:title],
 															 :version => inpdf[:version],
 															 :author => inpdf[:author],

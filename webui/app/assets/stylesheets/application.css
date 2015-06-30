@@ -7,7 +7,36 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
- *
  *= require_self
  *= require_tree .
- */
+*/
+
+header#page_header {
+  /*  background: firebrick; url('/assets/brand.png') bottom right no-repeat;
+  */
+    background: firebrick;
+    color: floralwhite;;
+    font-size: 0.9em;
+    height: 68px;
+    margin-bottom: 1-px;
+    overflow: hidden;
+    padding: 10px 20px;
+    a,
+    a:link,
+    a:hover,
+    a:active,
+    a:visited {
+        color: dodgerblue;
+        text-decoration: none;
+}
+
+    nav#utility { justify: right; align-content: right; float: right; font-size: 0.8em;}
+
+    #logo { position: absolute; top: 15px;}
+
+    #tagline { margin-left: 20px;}
+
+    div.container { overflow: hidden; padding: 0 20px;}
+}
+
+
