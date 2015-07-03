@@ -2,7 +2,7 @@ require 'redis'
 require 'redis-namespace'
 require 'redis-search'
 
-redis = Redis.new(:host => '10.0.1.13', :port => '6379')
+redis = Redis.new(:host => '10.0.1.17', :port => '6379')
 
 redis.select(1)
 

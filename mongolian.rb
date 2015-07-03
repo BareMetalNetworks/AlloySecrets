@@ -6,7 +6,7 @@ require 'optparse'
 require 'redis'
 require 'rinda/ring'       # for RingServer
 require 'rinda/tuplespace' # for TupleSpace
-
+require 'webui/app/models/book/'
 #DRb.start_service
 
 # Create a TupleSpace to hold named services, and start running.
@@ -31,17 +31,17 @@ redi = Redis.new({host: '10.0.1.13', db: '1'})
 Mongoid.load!("webui/config/mongoid.yml", :production)
 
 
-class Book
-  include Mongoid::Document
-  field :title
-  field :author
-	field :info
-	field :version
-  field :metadata
-	field :count
-	field :timestamp, :type=> Time
-  field :pages, :type => Array
-end
+# class Book
+#   include Mongoid::Document
+#   field :title
+#   field :author
+# 	field :info
+# 	field :version
+#   field :metadata
+# 	field :count
+# 	field :timestamp, :type=> Time
+#   field :pages, :type => Array
+# end
 
 class Mongol
 	def self.mongolian_find(hdir)
