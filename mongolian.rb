@@ -3,7 +3,7 @@ require 'pdf-reader'
 require 'mongoid'
 require 'moped'
 require 'optparse'
-
+require 'redis'
 require 'rinda/ring'       # for RingServer
 require 'rinda/tuplespace' # for TupleSpace
 
@@ -24,9 +24,12 @@ op.banner = "PDF parser and mongoloid insertion daemon"
 
 logger = Logger.new('mongol.log', 'a')
 logger.level=Logger::INFO
-## Scan local and remote file systems for docs/pdfs insert into mongo
 
+redi = Redis.new({host: '10.0.1.13', db: '1'})
+
+## Scan local and remote file systems for docs/pdfs insert into mongo
 Mongoid.load!("webui/config/mongoid.yml", :production)
+
 
 class Book
   include Mongoid::Document
@@ -87,17 +90,13 @@ end
 dirs =  %w{webui/uploads/pdf /home/vishnu/}
 docLocs = Mongol.mongolian_find(dirs)
 docLocs.each do |pdfLoc|
+  redi[]
   inserted, original_pdf = Mongol.mongolian_penetration(Mongol.mongolian_reader(pdfLoc))
   logger.info inserted.title
   logger.info inserted.count.to_s
   logger.info "-----------------------------------------"
 end
 
-# p Book.count
-# Books.each do |b|
-#   p b.pages
-#   sleep 1
-# end
 
 
 __END__
