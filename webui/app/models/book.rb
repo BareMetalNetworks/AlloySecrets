@@ -7,5 +7,5 @@ class Book
   field :metadata, type: String
   field :count, type: Integer
   field :timestamp, type: Time
-  field :page, type: String
+  field :pages, type: Array
 end

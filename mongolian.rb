@@ -23,6 +23,7 @@ op = OptionParser.new
 op.banner = "PDF parser and mongoloid insertion daemon"
 
 logger = Logger.new('mongol.log', 'a')
+logger.level=Logger::INFO
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 
 Mongoid.load!("webui/config/mongoid.yml", :production)
@@ -62,13 +63,14 @@ class Mongol
     reader.pages.each do |page|
       pages.push(page.text)
 
-    end
+		end
+		pdf[:pages] = pages
 		pdf
 	end
 
 	def self.mongolian_penetration(inpdf)
 		inserted = Book.create({
-															 :id => rand(10000..10000000),
+
 															 :title => inpdf[:title],
 															 :version => inpdf[:version],
 															 :author => inpdf[:author],
@@ -91,11 +93,11 @@ docLocs.each do |pdfLoc|
   logger.info "-----------------------------------------"
 end
 
-p Book.count
-Books.each do |b|
-  p b.pages
-  sleep 1
-end
+# p Book.count
+# Books.each do |b|
+#   p b.pages
+#   sleep 1
+# end
 
 
 __END__
