@@ -17,10 +17,10 @@ class Book
   belongs_to :user
   belongs_to :category
 
-  redis_search_index(:title_field => title,
+  redis_search_index(:title_field => :title,
                      :author_field => :author,
                      :condition_fields => [:category_id, :user_id],
-                     :ext_fields => [:category_name])
+                     :ext_fields => [:category_name, :pages])
 
   def category_name
     self.category.name

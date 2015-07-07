@@ -15,7 +15,7 @@ require 'redis-namespace'
 #options = {redisIP: '10.0.1.13'}
 
 $:.unshift File.dirname(__FILE__)
-redi = Redis.new({host: '10.0.1.13', db: '4'})
+#redi = Redis.new({host: '10.0.1.13', db: '4'})
 
 logger = Logger.new('mongol.log', 'a')
 logger.level=Logger::INFO
