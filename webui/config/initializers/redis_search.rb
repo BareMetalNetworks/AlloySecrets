@@ -11,5 +11,5 @@ redis = Redis::Namespace.new("alloysecrets:redis_search", :redis => redis)
 redis = Redis::Search.configure do |config|
   config.redis = redis
   config.complete_max_length = 10000
- # config.disable_remmesg = false
+  config.disable_remmesg = false
 end

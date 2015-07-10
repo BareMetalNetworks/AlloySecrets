@@ -20,11 +20,14 @@ class Book
   redis_search_index(:title_field => :title,
                      :author_field => :author,
                      :condition_fields => [:category_id, :user_id],
-                     :ext_fields => [:category_name, :pages])
+                      :ext_fields => [:pages])
+                     #:ext_fields => [:category_name, :pages])
 
+=begin
   def category_name
     self.category.name
   end
+=end
 
 end
 
