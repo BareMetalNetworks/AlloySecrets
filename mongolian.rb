@@ -25,7 +25,7 @@ op.banner = "PDF parser and mongoloid insertion daemon"
 logger = Logger.new('mongol.log', 'a')
 logger.level=Logger::INFO
 
-redi = Redis.new({host: '10.0.1.13', db: '1'})
+redi = Redis.new({host: '10.0.1.17', db: '1'})
 
 ## Scan local and remote file systems for docs/pdfs insert into mongo
 Mongoid.load!("webui/config/mongoid.yml", :production)
